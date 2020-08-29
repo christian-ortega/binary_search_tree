@@ -53,27 +53,32 @@ class BinarySearchTree
       node_queue.push(current_node.left) unless current_node.left.nil?
       node_queue.push(current_node.right) unless current_node.right.nil?
     end
-    
+
     level_order_array
   end
 
-  # prints data, but needs to return array!
-  def preorder(node = @root)
-    puts "#{node.data}"
-    preorder(node.left) unless node.left.nil?
-    preorder(node.right) unless node.right.nil?
+  def preorder(node = @root, array = [])
+    array.push(node.data)
+    preorder(node.left, array) unless node.left.nil?
+    preorder(node.right, array) unless node.right.nil?
+
+    array
   end
 
-  def inorder(node = @root)
-    inorder(node.left) unless node.left.nil?
-    puts "#{node.data}"
-    inorder(node.right) unless node.right.nil?
+  def inorder(node = @root, array = [])
+    inorder(node.left, array) unless node.left.nil?
+    array.push(node.data)
+    inorder(node.right, array) unless node.right.nil?
+
+    array
   end
 
-  def postorder(node = @root)
-    postorder(node.left) unless node.left.nil?
-    postorder(node.right) unless node.right.nil?
-    puts "#{node.data}"
+  def postorder(node = @root, array = [])
+    postorder(node.left, array) unless node.left.nil?
+    postorder(node.right, array) unless node.right.nil?
+    array.push(node.data)
+
+    array
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -98,17 +103,18 @@ tree.pretty_print
 
 puts "Level Order: "
 p tree.level_order
+puts ""
 
 puts "Preorder: "
-tree.preorder
+p tree.preorder
 puts ""
 
 puts "Inorder: "
-tree.inorder
+p tree.inorder
 puts ""
 
 puts "Postorder: "
-tree.postorder
+p tree.postorder
 puts ""
 
 puts "Find 3: "
