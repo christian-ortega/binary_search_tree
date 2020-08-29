@@ -30,10 +30,36 @@ class BinarySearchTree
     root_node = Node.new(tree_array[mid_index], build_tree(left_subarray), build_tree(right_subarray))
   end
 
+  def insert(value)
+    self.root = Node.new(value) if root.nil?
+
+    parentPointer = root
+    pointer = root
+    isLeft = nil
+
+    until pointer.nil?
+      parentPointer = pointer
+
+      if value == pointer.data
+        return # No duplicate entries
+      elsif value < pointer.data
+        pointer = pointer.left
+        isLeft = true
+      else
+        pointer = pointer.right
+        isLeft = false
+      end
+    end
+
+    isLeft ? parentPointer.left = Node.new(value) : parentPointer.right = Node.new(value)
+  end
+
   def find(value)
     pointer = root
+
     until pointer.nil?
       return pointer if pointer.data == value
+
       if value < pointer.data
         pointer = pointer.left
       else
@@ -119,6 +145,10 @@ class BinarySearchTree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  private
+
+  attr_writer :root
 end
 
 def random_array(size, limit)
@@ -129,7 +159,12 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new(random_array(13, 50))
+tree = BinarySearchTree.new([0,2,3])
+tree.insert(1)
+tree.insert(5)
+tree.insert(6)
+tree.insert(4)
+
 p tree
 tree.pretty_print
 
