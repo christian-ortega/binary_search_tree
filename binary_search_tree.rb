@@ -90,6 +90,22 @@ class BinarySearchTree
     left_height >= right_height ? left_height + 1 : right_height + 1
   end
 
+  def depth(node)
+    pointer = root
+    depth_number = 0
+
+    until pointer.nil? || node == pointer
+      if node < pointer
+        pointer = pointer.left
+      else
+        pointer = pointer.right
+      end
+      depth_number += 1
+    end
+
+    pointer.nil? ? -1 : depth_number
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     return if root.nil?
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -129,4 +145,11 @@ puts ""
 puts "Heights: "
 tree.level_order.each do |i|
   puts "Height at ( #{i} ): #{tree.height(tree.find(i))}"
+end
+
+puts ""
+
+puts "Depths: "
+tree.level_order.each do |i|
+  puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
 end
