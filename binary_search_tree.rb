@@ -30,6 +30,18 @@ class BinarySearchTree
     root_node = Node.new(tree_array[mid_index], build_tree(left_subarray), build_tree(right_subarray))
   end
 
+  def find(value)
+    pointer = root
+    until pointer.nil?
+      return pointer if pointer.data == value
+      if value < pointer.data
+        pointer = pointer.left
+      else
+        pointer = pointer.right
+      end
+    end
+  end
+
   def preorder(node = @root)
     puts "#{node.data}"
     preorder(node.left) unless node.left.nil?
@@ -64,7 +76,7 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new(random_array(7, 1000))
+tree = BinarySearchTree.new(random_array(7, 10))
 p tree
 tree.pretty_print
 
@@ -79,3 +91,6 @@ puts ""
 puts "Postorder: "
 tree.postorder
 puts ""
+
+puts "Find 3: "
+p tree.find(3)
