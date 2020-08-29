@@ -42,6 +42,22 @@ class BinarySearchTree
     end
   end
 
+  def level_order
+    level_order_array = []
+    node_queue = []
+    node_queue.push(root)
+
+    until node_queue.empty? do
+      current_node = node_queue.shift
+      level_order_array.push(current_node.data)
+      node_queue.push(current_node.left) unless current_node.left.nil?
+      node_queue.push(current_node.right) unless current_node.right.nil?
+    end
+    
+    level_order_array
+  end
+
+  # prints data, but needs to return array!
   def preorder(node = @root)
     puts "#{node.data}"
     preorder(node.left) unless node.left.nil?
@@ -76,9 +92,12 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new(random_array(7, 10))
+tree = BinarySearchTree.new(random_array(13, 20))
 p tree
 tree.pretty_print
+
+puts "Level Order: "
+p tree.level_order
 
 puts "Preorder: "
 tree.preorder
