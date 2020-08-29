@@ -7,6 +7,9 @@ Node = Struct.new(:data, :left, :right) do
 end
 
 class BinarySearchTree
+
+  attr_reader :root
+
   def initialize(array)
     @root = build_tree(array)
   end
@@ -26,4 +29,23 @@ class BinarySearchTree
 
     root_node = Node.new(tree_array[mid_index], build_tree(left_subarray), build_tree(right_subarray))
   end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    return if root.nil?
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
 end
+
+def random_array(size, limit)
+  result = []
+  size.times do
+    result.push(rand limit)
+  end
+  result
+end
+
+tree = BinarySearchTree.new(random_array(15, 1000))
+p tree
+tree.pretty_print
