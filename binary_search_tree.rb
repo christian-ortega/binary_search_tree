@@ -106,6 +106,13 @@ class BinarySearchTree
     pointer.nil? ? -1 : depth_number
   end
 
+  # VERIFY after insert is implemented
+  def balanced?(node = @root)
+    ((self.height(node.left) - self.height(node.right)).abs <= 1) && 
+        (node.left.nil? ? true : self.balanced?(node.left)) && 
+        (node.left.nil? ? true : self.balanced?(node.right))
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     return if root.nil?
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -153,3 +160,6 @@ puts "Depths: "
 tree.level_order.each do |i|
   puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
 end
+
+puts ""
+puts "Balanced? #{tree.balanced?}"
