@@ -54,6 +54,56 @@ class BinarySearchTree
     isLeft ? parentPointer.left = Node.new(value) : parentPointer.right = Node.new(value)
   end
 
+  def delete(value)
+    parentPointer = root
+    pointer = root
+    isLeft = nil
+
+    until pointer.nil? || value == pointer.data do
+      parentPointer = pointer
+
+      if value < pointer.data
+        pointer = pointer.left
+        isLeft = true
+      else
+        pointer = pointer.right
+        isLeft = false
+      end
+    end
+
+    # node with value not found, no deletion necessary
+    return if pointer.nil?
+
+    if pointer.left.nil? && pointer.right.nil?
+      isLeft ? parentPointer.left = nil : parentPointer.right = nil
+    elsif !pointer.left.nil? && pointer.right.nil?
+      isLeft ? parentPointer.left = pointer.left : parentPointer.right = pointer.left
+    elsif pointer.left.nil? && !pointer.right.nil?
+      isLeft ? parentPointer.left = pointer.right : parentPointer.right = pointer.right
+    else
+      # search for inorder successor
+      parentPointer = pointer
+      successor_pointer = pointer.right
+      isLeft = false
+
+      until successor_pointer.left.nil? do
+        parentPointer = successor_pointer
+        successor_pointer = successor_pointer.left
+        isLeft = true
+      end
+
+      # replace data of node to be deleted with data of inorder successor
+      pointer.data = successor_pointer.data
+
+      # remove inorder successor
+      if successor_pointer.right.nil?
+        isLeft ? parentPointer.left = nil : parentPointer.right = nil
+      else # inorder successor has right child
+        isLeft ? parentPointer.left = successor_pointer.right : parentPointer.right = successor_pointer.right
+      end
+    end
+  end
+
   def find(value)
     pointer = root
 
@@ -162,12 +212,32 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new(random_array(9, 30))
-5.times do
-  tree.insert(rand 30)
-end
+# tree = BinarySearchTree.new(random_array(9, 30))
+# 5.times do
+#   tree.insert(rand 30)
+# end
+
+tree = BinarySearchTree.new([1, 10, 20, 30, 40])
+tree.insert(10)
+tree.insert(0)
+tree.insert(2)
+tree.insert(4)
+tree.insert(11)
+tree.insert(5)
+
 
 p tree
+tree.pretty_print
+puts ""
+puts ""
+puts "Balanced? #{tree.balanced?}"
+
+tree.delete(1)
+tree.delete(30)
+tree.delete(20)
+tree.delete(50)
+tree.delete(5)
+
 tree.pretty_print
 puts ""
 puts ""
