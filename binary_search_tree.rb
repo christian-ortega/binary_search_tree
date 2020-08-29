@@ -81,6 +81,15 @@ class BinarySearchTree
     array
   end
 
+  def height(node)
+    return -1 if node.nil?
+    
+    left_height = height(node.left)
+    right_height = height(node.right)
+
+    left_height >= right_height ? left_height + 1 : right_height + 1
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     return if root.nil?
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -97,7 +106,7 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new(random_array(13, 20))
+tree = BinarySearchTree.new(random_array(13, 50))
 p tree
 tree.pretty_print
 
@@ -117,5 +126,7 @@ puts "Postorder: "
 p tree.postorder
 puts ""
 
-puts "Find 3: "
-p tree.find(3)
+puts "Heights: "
+tree.level_order.each do |i|
+  puts "Height at ( #{i} ): #{tree.height(tree.find(i))}"
+end
