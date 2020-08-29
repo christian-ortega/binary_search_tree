@@ -132,11 +132,14 @@ class BinarySearchTree
     pointer.nil? ? -1 : depth_number
   end
 
-  # VERIFY after insert is implemented
   def balanced?(node = @root)
     ((self.height(node.left) - self.height(node.right)).abs <= 1) && 
         (node.left.nil? ? true : self.balanced?(node.left)) && 
-        (node.left.nil? ? true : self.balanced?(node.right))
+        (node.right.nil? ? true : self.balanced?(node.right))
+  end
+
+  def rebalance
+    self.root = build_tree(self.level_order)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -159,14 +162,21 @@ def random_array(size, limit)
   result
 end
 
-tree = BinarySearchTree.new([0,2,3])
-tree.insert(1)
-tree.insert(5)
-tree.insert(6)
-tree.insert(4)
+tree = BinarySearchTree.new(random_array(9, 30))
+5.times do
+  tree.insert(rand 30)
+end
 
 p tree
 tree.pretty_print
+puts ""
+puts ""
+puts "Balanced? #{tree.balanced?}"
+
+tree.rebalance
+tree.pretty_print
+puts ""
+puts "Balanced? #{tree.balanced?}"
 
 puts "Level Order: "
 p tree.level_order
@@ -195,6 +205,3 @@ puts "Depths: "
 tree.level_order.each do |i|
   puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
 end
-
-puts ""
-puts "Balanced? #{tree.balanced?}"
