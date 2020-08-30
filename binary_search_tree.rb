@@ -207,8 +207,45 @@ class BinarySearchTree
   end
 end
 
-# Verify tree creation, balanced? check, and order traversals
-puts "Creating a Binary Search Tree from a random array..."
+# Verify order traversals, height checking, depth checking, and find function
+def check_read_functions(binary_tree) 
+  puts "Traversals:"
+  print "  Level Order: "
+  p binary_tree.level_order
+  puts ""
+  
+  print "  Preorder: "
+  p binary_tree.preorder
+  puts ""
+  
+  print "  Inorder: "
+  p binary_tree.inorder
+  puts ""
+  
+  print "  Postorder: "
+  p binary_tree.postorder
+
+  puts ""
+
+  puts "Heights: "
+  binary_tree.level_order.each do |i|
+    puts "  At ( #{i} ): #{binary_tree.height(binary_tree.find(i))}"
+  end
+
+  puts ""
+
+  puts "Depths: "
+  binary_tree.level_order.each do |i|
+    puts "  At ( #{i} ): #{binary_tree.depth(binary_tree.find(i))}"
+  end
+
+  puts ""
+  puts ""
+end
+
+
+# Verify tree creation, balanced? check, and read functions
+puts "Creating a Binary Search Tree from a random array...".upcase
 random_array = Array.new(15) {rand 100}
 tree = BinarySearchTree.new(random_array)
 
@@ -219,26 +256,11 @@ puts ""
 puts "Balanced? #{tree.balanced?}"
 puts ""
 
-puts "Level Order: "
-p tree.level_order
-puts ""
-
-puts "Preorder: "
-p tree.preorder
-puts ""
-
-puts "Inorder: "
-p tree.inorder
-puts ""
-
-puts "Postorder: "
-p tree.postorder
-puts ""
-puts ""
+check_read_functions(tree)
 
 
 # Verify insertion and balanced? check
-puts "Inserting elements to unbalance the tree..."
+puts "Inserting elements to unbalance the tree...".upcase
 5.times { tree.insert(rand(100..200))}
 
 puts "The Tree (After Insertion):"
@@ -250,8 +272,8 @@ puts ""
 puts ""
 
 
-# Verify rebalancing, balanced? check, and order traversals
-puts "Rebalancing the tree..."
+# Verify rebalancing, balanced? check, and read functions
+puts "Rebalancing the tree...".upcase
 tree.rebalance
 
 puts "The Tree (After Rebalancing):"
@@ -261,49 +283,33 @@ puts ""
 puts "Balanced? #{tree.balanced?}"
 puts ""
 
-puts "Level Order: "
-p tree.level_order
+check_read_functions(tree)
+
+
+# Verify deletion and balanced? check
+delete_start = 30
+delete_end = 60
+puts "Deleting elements (#{delete_start}-#{delete_end}) of the tree...".upcase
+delete_start.upto(delete_end) { |i| tree.delete(i) }
+
+puts "The Tree (After Deletion):"
+tree.pretty_print
 puts ""
 
-puts "Preorder: "
-p tree.preorder
+puts "Balanced? #{tree.balanced?}"
 puts ""
-
-puts "Inorder: "
-p tree.inorder
-puts ""
-
-puts "Postorder: "
-p tree.postorder
 puts ""
 
 
-# tree.delete(1)
-# tree.delete(30)
-# tree.delete(20)
-# tree.delete(50)
-# tree.delete(5)
+# Verify rebalancing, balanced? check, and read functions
+puts "Rebalancing the tree...".upcase
+tree.rebalance
 
-# tree.pretty_print
-# puts ""
-# puts ""
-# puts "Balanced? #{tree.balanced?}"
+puts "The Tree (After Rebalancing):"
+tree.pretty_print
+puts ""
 
-# tree.rebalance
-# tree.pretty_print
-# puts ""
-# puts "Balanced? #{tree.balanced?}"
+puts "Balanced? #{tree.balanced?}"
+puts ""
 
-
-
-# puts "Heights: "
-# tree.level_order.each do |i|
-#   puts "Height at ( #{i} ): #{tree.height(tree.find(i))}"
-# end
-
-# puts ""
-
-# puts "Depths: "
-# tree.level_order.each do |i|
-#   puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
-# end
+check_read_functions(tree)
