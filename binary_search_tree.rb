@@ -204,49 +204,59 @@ class BinarySearchTree
   attr_writer :root
 end
 
-def random_array(size, limit)
-  result = []
-  size.times do
-    result.push(rand limit)
-  end
-  result
-end
+# Verify tree creation, balanced? check, and order traversals
+puts "Creating a Binary Search Tree from a random array..."
+random_array = Array.new(15) {rand 100}
+tree = BinarySearchTree.new(random_array)
 
-# tree = BinarySearchTree.new(random_array(9, 30))
-# 5.times do
-#   tree.insert(rand 30)
-# end
-
-tree = BinarySearchTree.new([1, 10, 20, 30, 40])
-tree.insert(10)
-tree.insert(0)
-tree.insert(2)
-tree.insert(4)
-tree.insert(11)
-tree.insert(5)
-
-
-p tree
+puts "The Tree:"
 tree.pretty_print
 puts ""
-puts ""
+
 puts "Balanced? #{tree.balanced?}"
+puts ""
 
-tree.delete(1)
-tree.delete(30)
-tree.delete(20)
-tree.delete(50)
-tree.delete(5)
+puts "Level Order: "
+p tree.level_order
+puts ""
 
+puts "Preorder: "
+p tree.preorder
+puts ""
+
+puts "Inorder: "
+p tree.inorder
+puts ""
+
+puts "Postorder: "
+p tree.postorder
+puts ""
+puts ""
+
+
+# Verify insertion and balanced? check
+puts "Inserting elements to unbalance the tree..."
+5.times { tree.insert(rand(100..200))}
+
+puts "The Tree (After Insertion):"
 tree.pretty_print
 puts ""
-puts ""
-puts "Balanced? #{tree.balanced?}"
 
+puts "Balanced? #{tree.balanced?}"
+puts ""
+puts ""
+
+
+# Verify rebalancing, balanced? check, and order traversals
+puts "Rebalancing the tree..."
 tree.rebalance
+
+puts "The Tree (After Rebalancing):"
 tree.pretty_print
 puts ""
+
 puts "Balanced? #{tree.balanced?}"
+puts ""
 
 puts "Level Order: "
 p tree.level_order
@@ -264,14 +274,33 @@ puts "Postorder: "
 p tree.postorder
 puts ""
 
-puts "Heights: "
-tree.level_order.each do |i|
-  puts "Height at ( #{i} ): #{tree.height(tree.find(i))}"
-end
 
-puts ""
+# tree.delete(1)
+# tree.delete(30)
+# tree.delete(20)
+# tree.delete(50)
+# tree.delete(5)
 
-puts "Depths: "
-tree.level_order.each do |i|
-  puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
-end
+# tree.pretty_print
+# puts ""
+# puts ""
+# puts "Balanced? #{tree.balanced?}"
+
+# tree.rebalance
+# tree.pretty_print
+# puts ""
+# puts "Balanced? #{tree.balanced?}"
+
+
+
+# puts "Heights: "
+# tree.level_order.each do |i|
+#   puts "Height at ( #{i} ): #{tree.height(tree.find(i))}"
+# end
+
+# puts ""
+
+# puts "Depths: "
+# tree.level_order.each do |i|
+#   puts "Depth at ( #{i} ): #{tree.depth(tree.find(i))}"
+# end
