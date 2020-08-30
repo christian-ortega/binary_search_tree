@@ -1,7 +1,7 @@
 # binary_search_tree
 THE ODIN PROJECT: DATA STRUCTURES AND ALGORITHMS
 
-### Binary Search Tree ([View in Repl.it]())
+### Binary Search Tree ([View in Repl.it](https://repl.it/@chrisortegax/binarysearchtree#main.rb))
 This is an implementation in Ruby of a Binary Search Tree. In the lib folder, the Node structure and Binary Search Tree class are implemented. The main file includes a driver script to verify all the functions of the Binary Search Tree class.
 
 #### Node
