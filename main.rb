@@ -1,3 +1,4 @@
+require_relative "lib/node"
 require_relative "lib/binary_search_tree"
 
 # Verify order traversals, height checking, depth checking, and find function
